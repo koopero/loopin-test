@@ -1,0 +1,25 @@
+{
+  "name": "loopin-test",
+  "version": "0.1.0",
+  "description": "Semi-automated test suite for Loopin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koopero/loopin-test.git"
+  },
+  "keywords": [
+    "Loopin"
+  ],
+  "author": "Samm Zuest Cooper <koopero@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koopero/loopin-test/issues"
+  },
+  "homepage": "https://github.com/koopero/loopin-test#readme",
+  "dependencies": {
+    "chai": "^3.5.0"
+  }
+}

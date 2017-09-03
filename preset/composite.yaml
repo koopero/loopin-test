@@ -1,0 +1,18 @@
+image:
+  midground: image/shittyBear.png
+
+render:
+  output:
+    src: background
+    shader: passthru
+
+    layer:
+      a:
+        blend: alpha
+        src: midground
+
+      b:
+        blend: add
+        src: foreground
+
+show: output

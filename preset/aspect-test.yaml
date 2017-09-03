@@ -1,0 +1,34 @@
+show: output
+
+window:
+  width: 1200
+  height: 600
+
+mesh/sprite:
+  plane: 2
+
+mesh/square:
+  aspect: 1
+  plane: 2
+
+buffer/output:
+  width: 1200
+  height: 600
+  aspect: 1
+
+render/output:
+  clear: true
+  mesh: sprite
+  src: gate
+  camera: view
+  # layer:
+  #   a:
+  #     src: rect
+  #     blend: add
+  #     aspect: 3
+  #     camera: spin
+  #   b:
+  #     src: circle
+  #     blend: add
+  #     mesh: square
+  #     camera: spin

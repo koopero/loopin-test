@@ -1,13 +1,6 @@
-image:
-  background: image/air.jpg
-  sprite: image/shittyBear.png
-  foreground: image/starfield.jpg
-
 render:
   output:
-    shader: colour
-    float:
-      colour: 1
+    src: background
 
     layer:
       0:

@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/koopero/loopin-test#readme",
   "dependencies": {
-    "chai": "^3.5.0"
+    "boptions": "^0.5.0",
+    "chai": "^3.5.0",
+    "lodash": "^4.17.4",
+    "loopin": "^0.8.0-beta",
+    "loopin-native": "^0.8.0"
   }
 }

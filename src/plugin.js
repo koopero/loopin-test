@@ -17,6 +17,8 @@ function loopinTest() {
   loopin.testAnimate = testAnimate.bind( loopin )
   loopin.testRandom = require('./plugin/testRandom').bind( loopin )
   loopin.testImage = require('./plugin/testImage').bind( loopin )
+  loopin.testSprite = require('./plugin/testSprite').bind( loopin )
+
 
 }
 

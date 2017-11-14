@@ -1,5 +1,5 @@
 image:
-  input: image/water.jpg
+  input: image/bars.png
   displace: image/rgClouds.jpg
 
 render:
@@ -8,15 +8,10 @@ render:
     shader: displace
 
     float:
-      amount: 10
+      amount: 0
 
-    tex:
-      displace: displace
-
-shader:
-  displace:
-    vert: shader/displace.vert
-    frag: shader/displace.frag
+    texture/displace:
+      buffer: displace
 
 buffer:
   output:

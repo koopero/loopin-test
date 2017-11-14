@@ -51,6 +51,7 @@ function test ( func ) {
 
 
     loopin.plugin('log')
+    loopin.logShow('patch')
     loopin.plugin( require('./plugin') )
 
     loopin.patch( opt.name, 'window/title')
@@ -68,12 +69,11 @@ function test ( func ) {
 
     }
 
-    promise = promise.then( () => loopin.plugin('bootstrap', {
-      native: {
-        verbose: true,
-        runCwd: test.resolveData()
-      }
-    }))
+    loopin.plugin( require('loopin-native') )
+    loopin.plugin( require('loopin-shaders') )
+
+
+    promise = promise.then( () => loopin.bootstrap() )
 
     if ( opt.func && opt.waitForBootstrap ) {
       promise = promise.then( () => opt.func( loopin ) )

@@ -1,5 +1,6 @@
 require('../index').test( 'mouse-test', 'sprite', function ( loopin ) {
 
+  loopin.preset('sprite')
   loopin.plugin('mouse')
   loopin.plugin('animate')
   loopin.animate( function ( frame ) {
@@ -11,6 +12,7 @@ require('../index').test( 'mouse-test', 'sprite', function ( loopin ) {
     // console.log('test-animate', frame )
   } )
 
-  return Promise.resolve()
+  return loopin.testSprite()
+  .then( () => loopin.testImage('background') )
   .then( () => loopin.testDelay( 5000 ) )
 } )

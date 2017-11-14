@@ -23,7 +23,7 @@ require('../index').test( 'pixels-test', function ( loopin ) {
         show: 'testWriteHex'
       })
     )
-    .then( () => loopin.testDelay() )
+    .then( () => loopin.testPatchAndDisplay('ffff00 ff00ff 00ffff', 'pixels/testWriteHex/data') )
     .then( () => loopin.read(`buffer/testWriteHex`) )
     .then( ( data ) => {
       assert.equal( data.width, 3 )
@@ -47,12 +47,11 @@ require('../index').test( 'pixels-test', function ( loopin ) {
         show: 'testWriteHex2'
       })
     )
-    .then( () => loopin.testDelay() )
+    .then( () => loopin.testPatchAndDisplay( 'f00 0f0 00f fff', 'pixels/testWriteHex2/data' ) )
     .then( () => loopin.read(`buffer/testWriteHex2`) )
     .then( ( data ) => {
       assert.equal( data.height, 2 )
     })
-    .then( () => loopin.testDelay() )
   }
 
   function testWriteFloat() {
@@ -64,18 +63,16 @@ require('../index').test( 'pixels-test', function ( loopin ) {
             format: 'float',
             channels: 'r',
             width: 3,
-            data: '0 1 0 1 0.5 1 0 1 0'
           }
         },
         show: 'testWriteFloat'
       })
     )
-    .then( () => loopin.testDelay() )
+    .then( () => loopin.testPatchAndDisplay( '0 1 0 1 0.5 1 0 1 0', 'pixels/testWriteFloat/data' ) )
     .then( () => loopin.read(`buffer/testWriteFloat`) )
     .then( ( data ) => {
       assert.equal( data.height, 3 )
     })
-    .then( () => loopin.testDelay() )
   }
 
   function testReadFloat() {
@@ -154,7 +151,7 @@ require('../index').test( 'pixels-test', function ( loopin ) {
 
 
   function testBase64() {
-    let pixels = [ 200, 0, 0, 100, 0, 0, 200, 200 ]
+    let pixels = [ 200, 0, 0, 255, 0, 0, 200, 255 ]
       , buff = new Buffer( pixels )
       , base64 = buff.toString('base64')
 
@@ -164,9 +161,8 @@ require('../index').test( 'pixels-test', function ( loopin ) {
         pixels: {
           _4_write: {
             buffer: 'testBase64',
-            format: 'rgba',
-            channels: 'rgba',
-            data: base64
+            format: 'base64',
+            channels: 'rgba'
           },
 
           _5_read: {
@@ -178,18 +174,20 @@ require('../index').test( 'pixels-test', function ( loopin ) {
         show: 'testBase64'
       })
     )
-    .then( () => loopin.testDelay() )
+    .then( () => loopin.testPatchAndDisplay( base64, 'pixels/_4_write/data') )
+    .then( () => loopin.read('buffer/testBase64') )
+    .tap( console.log )
+    .then( ( data ) => {
+      assert.equal( data.width, 2 )
+      assert.equal( data.height, 1 )
+    } )
     .then( () => loopin.patch('once','pixels/_5_read/output') )
     .then( () => loopin.dispatchListen('pixels') )
     .then( ( event ) => {
       let data = event.data.data
       assert.deepEqual( data, base64 )
     })
-    .then( () => loopin.read('buffer/testBase64') )
-    .then( ( data ) => {
-      assert.equal( data.width, 2 )
-      assert.equal( data.height, 1 )
-    } )
+
     .then( () => loopin.testDelay() )
   }
 

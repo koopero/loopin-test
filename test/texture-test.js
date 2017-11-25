@@ -1,4 +1,19 @@
-require('../index').test( 'texture-test', 'rotozoomer', function ( loopin ) {
+require('../index').test( 'texture-test', function ( loopin ) {
+
+  loopin.patchYAML(`
+    window/width/: 1024
+    window/height/: 1024
+
+    render/output/:
+      src:
+        filter: nearest
+        buffer: tile
+      shader: rotozoomer
+
+    show: output
+  `)
+
+  loopin.testImage( 'tile' )
 
   const texturePath = 'render/output/src/'
 

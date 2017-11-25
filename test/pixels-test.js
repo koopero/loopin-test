@@ -1,35 +1,33 @@
 const assert = require('chai').assert
 
-require('../index').test( 'pixels-test', function ( loopin ) {
+require('../index').test( 'pixels-test', async function ( loopin ) {
 
-  return loopin.Promise.resolve()
-  .then( () => testBase64() )
-  .then( () => testUnclamped() )
-  .then( () => testReadFloat() )
-  .then( () => testWriteFloat() )
-  .then( () => testWriteHex() )
-  .then( () => testWriteHex2() )
+  await testWriteHex()
+  await testBase64()
+  await testUnclamped()
+  await testReadFloat()
+  await testWriteFloat()
+  await testWriteHex2()
 
-  function testWriteHex() {
-    return loopin.Promise.resolve(
-      loopin.patch( {
-        pixels: {
-          testWriteHex: {
-            format: 'hex',
-            channels: 'rgb',
-            data: 'ffff00 ff00ff 00ffff'
-          }
-        },
-        show: 'testWriteHex'
-      })
-    )
-    .then( () => loopin.testPatchAndDisplay('ffff00 ff00ff 00ffff', 'pixels/testWriteHex/data') )
-    .then( () => loopin.read(`buffer/testWriteHex`) )
-    .then( ( data ) => {
-      assert.equal( data.width, 3 )
-      assert.equal( data.height, 1 )
+  async function testWriteHex() {
+    await loopin.patch( {
+      pixels: {
+        testWriteHex: {
+          format: 'hex',
+          channels: 'rgb',
+          data: 'ffff00 ff00ff 00ffff'
+        }
+      },
+      show: 'testWriteHex'
     })
-    .then( () => loopin.testDelay() )
+
+    await loopin.testPatchAndDisplay('ffff00 ff00ff 00ffff', 'pixels/testWriteHex/data')
+
+    await loopin.testDelay( 2000 )
+
+    let data = await loopin.read(`buffer/testWriteHex`)
+    assert.equal( data.width, 3 )
+    assert.equal( data.height, 1 )
   }
 
   function testWriteHex2() {

@@ -23,5 +23,5 @@ require('../index').test( 'displace', async function ( loopin ) {
     show: output
   ` )
 
-  await loopin.testAnimate('render/output/float/amount', 0.2, 5 )
+  await loopin.testAnimate('render/output/float/amount', 0.2 )
 } )

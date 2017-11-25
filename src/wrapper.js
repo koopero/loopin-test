@@ -52,6 +52,7 @@ function test ( func ) {
 
     loopin.plugin('log')
     loopin.logShow('patch')
+
     loopin.plugin( require('./plugin') )
 
     loopin.patch( opt.name, 'window/title')
@@ -69,7 +70,7 @@ function test ( func ) {
 
     }
 
-    loopin.plugin( require('loopin-native') )
+    loopin.plugin( require('loopin-native'), { useEnv: true, verbose: true } )
     loopin.plugin( require('loopin-shaders') )
 
 

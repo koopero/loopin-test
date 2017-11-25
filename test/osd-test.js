@@ -19,15 +19,14 @@ const hypnotoad =
 +'               |/`.\\`\'        ,\',\'); SSt\n'
 +'                   `         (/  (/'
 
-require('../index').test( 'osd-test', 'indian', function ( loopin ) {
-  return Promise.resolve( hypnotoad )
-  .then( ( hypnotoad ) => loopin.patch( hypnotoad, 'osd/text' ) )
-  .then( () => loopin.testDelay() )
-  .then( () => loopin.patch( "", 'osd/text' ) )
-  .then( () => loopin.patch( "server can write this string", 'osd/server' ) )
-  .then( () => loopin.testDelay() )
-  .then( () => loopin.patch( "disabling after testDelay", 'osd/text' ) )
-  .then( () => loopin.testDelay() )
-  .then( () => loopin.patch( { enabled: false }, 'osd' ) )
-  .then( () => loopin.testDelay() )
+require('../index').test( 'osd-test', async function ( loopin ) {
+  await loopin.patch( hypnotoad, 'osd/text' )
+  await loopin.testDelay()
+  await loopin.patch( "", 'osd/text' )
+  await loopin.patch( "server can write this string", 'osd/server' )
+  await loopin.testDelay()
+  await loopin.patch( "disabling after testDelay", 'osd/text' )
+  await loopin.testDelay()
+  await loopin.patch( { enabled: false }, 'osd' )
+  await loopin.testDelay()
 } )

@@ -44,6 +44,7 @@ void main()
   vec4 fadeColour = blurColour;
 
   fadeColour *= 0.999;
+
   fadeColour.a = 1.0;
   outputColour = fadeColour;
 }

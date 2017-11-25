@@ -2,24 +2,41 @@ module.exports = loopinTest
 
 const _ = require('lodash')
 
-function loopinTest() {
-  const loopin = this
+loopinTest.options = require('boptions')({
+  'delay': 2000,
+  'iterations': 1,
+  'animateDuration': 4000
+})
+
+
+function loopinTest( func ) {
+  const opt = loopinTest.options( arguments )
+      , loopin = this
 
   loopin.plugin('log')
   loopin.plugin('read')
   loopin.plugin('dispatch')
 
+  loopin.testOptions = opt
   loopin.testLog = loopin.log.bind( loopin, '_test_')
   loopin.testBenchmark = testBenchmark.bind( loopin )
   loopin.testDelay = testDelay.bind( loopin )
   loopin.testResult = testResult.bind( loopin )
   loopin.testPatchAndDisplay = testPatchAndDisplay.bind( loopin )
   loopin.testAnimate = testAnimate.bind( loopin )
+  loopin.testIterate = testIterate.bind( loopin )
+
   loopin.testRandom = require('./plugin/testRandom').bind( loopin )
   loopin.testImage = require('./plugin/testImage').bind( loopin )
   loopin.testSprite = require('./plugin/testSprite').bind( loopin )
+}
 
-
+async function testIterate( func ) {
+  const loopin = this
+  const iterations = parseInt( loopin.testOptions.iterations )
+  for ( let i = 0; i < iterations; i ++ ) {
+    await func( i )
+  }
 }
 
 testBenchmark.options = require('boptions')({
@@ -61,7 +78,7 @@ function testBenchmark() {
 
 testDelay.options = require('boptions')({
   '#inline': ['duration'],
-  duration: 500
+  duration: 2000
 })
 
 function testDelay() {
@@ -102,14 +119,14 @@ function testPatchAndDisplay( data, path ) {
 
 
 testAnimate.options = require('boptions')({
-  '#inline': ['path','to','duration', 'from'],
+  '#inline': ['path','to','from','duration' ],
   path: '',
   to: 1,
-  from: 0,
-  duration: 3
+  from: NaN,
+  duration: 0
 })
 
-function testAnimate() {
+async function testAnimate() {
   const loopin = this
       , opt = testAnimate.options( arguments )
       , path = opt.path
@@ -117,11 +134,15 @@ function testAnimate() {
   var _startClock = NaN
     , _to = opt.to
     , _from = opt.from
+    , duration = opt.duration
+
+
+  if ( !duration )
+    duration = parseInt( loopin.testOptions.animateDuration )
 
 
   if ( isNaN( _from ) )
-    _from = loopin.read( path )
-      .then( ( y ) => parseFloat( y ) || 0 )
+    _from = parseFloat( await loopin.read( path ) )|| 0
 
 
   return new (loopin.Promise)( function ( resolve, reject ) {
@@ -137,7 +158,7 @@ function testAnimate() {
       loopin.patch( `${path}:\n  ${_from} => ${_to}`, 'osd/text' )
 
       var time = frame.time - _startClock
-        , x = Math.min( 1, time / opt.duration )
+        , x = Math.min( 1, time / duration * 1000 )
 
       Promise.resolve( _from )
       .then( function ( _from ) {

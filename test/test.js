@@ -1,5 +1,10 @@
 module.exports = test
 
+process.on('unhandledRejection', error => {
+  console.log('unhandledRejection', error.message, error.stack )
+})
+
+
 const path = require('path')
 
 test.resolveData = path.resolve.bind( null, __dirname, 'data/' )

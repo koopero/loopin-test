@@ -1,13 +1,21 @@
-require('../index').test( 'waveform-test', function ( loopin ) {
+require('../index').test( 'waveform-test', async function ( loopin ) {
 
 
+  // TODO: Can't read info/waveform directly...
+  let info = await loopin.read('info')
+  info = info['waveform']
 
+  loopin.log( 'waveform-test', 'info', info )
+
+  let deviceID = process.env.LOOPIN_TEST_WAVEFORM_DEVICEID || 0
 
   loopin.patch({
     waveform: {
       test: {
-        duration: 0.01,
-        squelch: 0.5,
+        deviceID: deviceID,
+        duration: 2,
+        squelch: 0.0,
+        gain: 10,
         phase: 'abs'
       }
     },
@@ -17,5 +25,5 @@ require('../index').test( 'waveform-test', function ( loopin ) {
     }
   })
 
-  return loopin.testDelay()
+  await loopin.testDelay( 5000 )
 })

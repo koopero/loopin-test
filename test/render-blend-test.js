@@ -25,20 +25,20 @@ require('../index').test( 'render-blend-test', async function ( loopin ) {
     show: test
   `)
 
-  // await loopin.testAssertBufferColour({
-  //   hex: 'ffff00'
-  // })
+  await loopin.testAssertBufferColour({
+    hex: 'ffff00'
+  })
 
 
   loopin.patchYAML(`
     pixels:
-      dst/data: 'ff2000'
-      src/data: '20ff00'
+      dst/data: 'ff2080'
+      src/data: '20ff80'
 
-    render/test/src/blend: min
+    render/test/layer/src/blend: min
   `)
 
   await loopin.testAssertBufferColour({
-    hex: '202000'
+    hex: '202080'
   })
 })

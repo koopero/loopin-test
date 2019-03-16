@@ -61,6 +61,7 @@ require('../index').test( 'aspect-test', function ( loopin ) {
         , aspect = gate.aspect
 
     loopin.patch( aspect, 'mesh/sprite/aspect' )
+    console.log("********* IMAGE", image )
     return loopin.testPatchAndDisplay( image, 'image/gate' )
   }
 

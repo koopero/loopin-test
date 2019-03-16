@@ -25,10 +25,10 @@ function loopinTest( func ) {
   loopin.testPatchAndDisplay = testPatchAndDisplay.bind( loopin )
   loopin.testAnimate = testAnimate.bind( loopin )
   loopin.testIterate = testIterate.bind( loopin )
-
   loopin.testRandom = require('./plugin/testRandom').bind( loopin )
   loopin.testImage = require('./plugin/testImage').bind( loopin )
   loopin.testSprite = require('./plugin/testSprite').bind( loopin )
+  loopin.testAssertBufferColour = require('./plugin/testAssertBufferColour').bind( loopin )
 }
 
 async function testIterate( func ) {

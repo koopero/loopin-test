@@ -28,9 +28,8 @@ function test ( func ) {
 
   function wrapMocha() {
     describe( opt.name, function () {
-      it('works', function ( cb ) {
-        run()
-        .then( () => cb() )
+      it('works', async function () {
+        await run()
       })
     } )
   }

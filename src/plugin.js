@@ -3,7 +3,7 @@ module.exports = loopinTest
 const _ = require('lodash')
 
 loopinTest.options = require('boptions')({
-  'delay': 2000,
+  'delay': 250,
   'iterations': 1,
   'animateDuration': 4000
 })
@@ -78,7 +78,7 @@ function testBenchmark() {
 
 testDelay.options = require('boptions')({
   '#inline': ['duration'],
-  duration: 2000
+  duration: 200
 })
 
 function testDelay() {

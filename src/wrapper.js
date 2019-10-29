@@ -16,7 +16,7 @@ test.options = require('boptions')({
 })
 
 
-function test ( func ) {
+async function test ( func ) {
   const opt = test.options( arguments )
 
 
@@ -39,6 +39,8 @@ function test ( func ) {
     const Loopin = require('loopin')
         , loopin = Loopin()
         , Promise = loopin.Promise
+
+    var error 
 
     loopin.plugin('files')
     loopin.filesRoot( test.resolveData() )
@@ -76,12 +78,17 @@ function test ( func ) {
     promise = promise.then( () => loopin.bootstrap() )
 
     if ( opt.func && opt.waitForBootstrap ) {
-      promise = promise.then( () => opt.func( loopin ) )
+      promise = promise.then( () => opt.func( loopin ) ).catch( err => error = err )
     }
 
     promise = promise.then( function() {
       return loopin.close()
     })
+
+    promise = promise.then( async function() {
+      if ( error )
+        throw error
+    } )
 
     return promise
   }

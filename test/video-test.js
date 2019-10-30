@@ -1,13 +1,11 @@
 require('../index').test( 'video-test', async function ( loopin ) {
 
-  // const filename = `video/1920x1080-30fps-10sec-hap.mov`
-  // const filename = `video/1920x1080-30fps-10sec-hap.mov`
-  const filename = `video/8MP-30fps-10sec-h264-crf22.mov`
+  const filename = `video/vapourdude-mjpeg.mov`
 
 
   loopin.patchYAML(`
     video/test:
-      src: ${filename}
+      file: ${filename}
 
     show/buffer: test
   `)

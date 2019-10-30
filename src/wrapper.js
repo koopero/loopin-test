@@ -74,8 +74,9 @@ async function test ( func ) {
     loopin.plugin( require('loopin-native'), { useEnv: true, verbose: true } )
     loopin.plugin( require('loopin-shaders') )
 
-
     promise = promise.then( () => loopin.bootstrap() )
+    promise = promise.then( () => Promise.delay( 500 ) )
+
 
     if ( opt.func && opt.waitForBootstrap ) {
       promise = promise.then( () => opt.func( loopin ) ).catch( err => error = err )

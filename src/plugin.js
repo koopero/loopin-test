@@ -3,7 +3,7 @@ module.exports = loopinTest
 const _ = require('lodash')
 
 loopinTest.options = require('boptions')({
-  'delay': 2000,
+  'delay': 250,
   'iterations': 1,
   'animateDuration': 4000
 })
@@ -25,10 +25,14 @@ function loopinTest( func ) {
   loopin.testPatchAndDisplay = testPatchAndDisplay.bind( loopin )
   loopin.testAnimate = testAnimate.bind( loopin )
   loopin.testIterate = testIterate.bind( loopin )
+  loopin.testSection = testSection.bind( loopin )
+  loopin.testSectionX = () => {}
 
   loopin.testRandom = require('./plugin/testRandom').bind( loopin )
   loopin.testImage = require('./plugin/testImage').bind( loopin )
   loopin.testSprite = require('./plugin/testSprite').bind( loopin )
+
+  loopin.testAssertBufferColour = require('./plugin/testAssertBufferColour').bind( loopin )
 }
 
 async function testIterate( func ) {
@@ -78,7 +82,7 @@ function testBenchmark() {
 
 testDelay.options = require('boptions')({
   '#inline': ['duration'],
-  duration: 2000
+  duration: 200
 })
 
 function testDelay() {
@@ -104,6 +108,23 @@ function testResult() {
   return loopin.testDelay( opt.delay )
   .then( () => loopin.read( opt.path ) )
   .then( ( data ) => loopin.log( opt.path, opt.name, { data: data } ) )
+}
+
+testSection.options = require('boptions')({
+  '#inline': ['text','func'],
+  text: 'testSection default',
+  func: '#function',
+})
+
+async function testSection() {
+  const loopin = this
+  const opt = testSection.options( arguments )
+  const { text, func } = opt
+  let lastText = await loopin.read( 'osd/text/')
+  loopin.log( 'testSection', { data: { text } } )
+  await loopin.patch( text, 'osd/text/')
+  await func()
+  await loopin.patch( lastText, 'osd/text/')
 
 }
 
